@@ -11,6 +11,9 @@ public class Radar
     // stores whether each cell triggered detection for the current scan of the radar
     private boolean[][] currentScan;
     
+    //
+    int[][] possibleDxDy = new int[11][11];
+    
     // value of each cell is incremented for each scan in which that cell triggers detection 
     private int[][] accumulator;
     
@@ -83,7 +86,6 @@ public class Radar
         injectNoise();
         
         // udpate the accumulator
-        int[][] possibleDxDy = new int[11][11];
         for(int prevRow = 0; prevRow < prevScan.length; prevRow++)
         {
             for(int prevCol = 0; prevCol < prevScan[0].length; prevCol++)
@@ -123,16 +125,18 @@ public class Radar
                 }
             }
         }
-        for (int i = 0; i < possibleDxDy.length; i++)
+
+        for(int[] dXdYArray : possibleDxDy)
         {
-            for (int j = 0; i < possibleDxDy.length; i++)
+            for (int dXdY : dXdYArray)
             {
-                System.out.print(possibleDxDy[i][j] + " ");
+                System.out.print(dXdY+" ");
             }
             System.out.println();
         }
         // keep track of the total number of scans
         numScans++;
+        System.out.println();
     }
 
     /**
@@ -237,6 +241,42 @@ public class Radar
     public int getNumScans()
     {
         return numScans;
+    }
+    
+    public int getActualDx()
+    {
+        int max = possibleDxDy[0][0];
+        int actualDx = 0;
+        for (int i = 0; i < possibleDxDy.length; i++) 
+        {
+            for (int j = 0; j < possibleDxDy[0].length; j++) 
+            {
+                if (possibleDxDy[i][j] > max) 
+                {
+                    max = possibleDxDy[i][j];
+                    actualDx = i-5;
+                }
+            }
+        }
+        return actualDx;
+    }
+    
+    public int getActualDy()
+    {
+        int max = possibleDxDy[0][0];
+        int actualDy = 0;
+        for (int i = 0; i < possibleDxDy.length; i++) 
+        {
+            for (int j = 0; j < possibleDxDy[0].length; j++) 
+            {
+                if (possibleDxDy[i][j] > max) 
+                {
+                    max = possibleDxDy[i][j];
+                    actualDy = j-5;
+                }
+            }
+        }
+        return actualDy;
     }
     
     /**

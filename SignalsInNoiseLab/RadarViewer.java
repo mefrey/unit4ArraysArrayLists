@@ -24,7 +24,7 @@ public class RadarViewer
         final int COLS = 100;
         Radar radar = new Radar(ROWS, COLS);
         radar.setMonsterVelocity(dX,dY);
-        radar.setNoiseFraction(0.00010);
+        radar.setNoiseFraction(0.0010);
         radar.scan();
         
         JFrame frame = new JFrame();
@@ -53,6 +53,9 @@ public class RadarViewer
             
             frame.repaint();
         }
+        //find velocity
+        System.out.print("Monster's velocity is "+radar.getActualDx()+" in the x direction and "
+        +radar.getActualDy()+" in the y direction");
     }
 
 }
