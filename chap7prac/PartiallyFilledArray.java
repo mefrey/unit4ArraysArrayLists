@@ -45,8 +45,30 @@ public class PartiallyFilledArray
     public void swapElements( int index1, int index2 )
     {
         int derp = values[index1];
-        derp = values[index2];
-        values[index2] = values[index1];
+        values[index1] = values[index2];
+        values[index2] = derp;
+        
+    }
+    
+    public void insertElement( int val )
+    {
+        if(currentSize == values.length)
+        {
+            growArray();
+        }
+        values[currentSize] = val;
+        currentSize++;
+    }
+    
+    private void growArray()
+    {
+        int newArraySize = values.length * 2;
+        int[] newArray = new int[newArraySize];
+        for( int i = 0; i < values.length; i++)
+        {
+            newArray[i] = values[i];
+        }
+        values = newArray;
     }
 
 }

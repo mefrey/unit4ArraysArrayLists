@@ -1,0 +1,43 @@
+Class documentation
+<---- javadoc command: ---->
+C:\PROGRA~1\Java\JDK17~1.0_6\bin\javadoc.exe
+-author
+-version
+-nodeprecated
+-package
+-noindex
+-notree
+-nohelp
+-nonavbar
+-source
+1.7
+-classpath
+C:\Program Files\BlueJ\lib\bluejcore.jar;C:\Program Files\BlueJ\lib\junit-4.8.2.jar;\\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\GridWorld\gridworld.jar;\\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab
+-d
+\\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc
+-encoding
+UTF-8
+-charset
+UTF-8
+-docletpath
+C:\Program Files\BlueJ\lib\bjdoclet.jar
+-doclet
+bluej.doclet.doclets.formats.html.HtmlDoclet
+\\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\Radar.java
+<---- end of javadoc command ---->
+Loading source file \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\Radar.java...
+Constructing Javadoc information...
+Standard Doclet version 1.7.0_60
+Building tree for all the packages and classes...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\Radar.html...
+\\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\Radar.java:92: warning - @pre is an unknown tag.
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\package-frame.html...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\package-summary.html...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\constant-values.html...
+Building index for all the packages and classes...
+Building index for all classes...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\allclasses-frame.html...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\allclasses-noframe.html...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\index.html...
+Generating \\NNHSSRV2.hs.sd203.org\MEFrey$\APCS\unit4ArraysArrayLists\SignalsInNoiseLab\doc\stylesheet.css...
+1 warning

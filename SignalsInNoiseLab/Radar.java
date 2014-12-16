@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  * The model for radar scan and accumulator
  * 
@@ -17,6 +17,9 @@ public class Radar
     // location of the monster
     private int monsterLocationRow;
     private int monsterLocationCol;
+    // velocity of monster
+    private int monsterDx;
+    private int monsterDy;
 
     // probability that a cell will trigger a false detection (must be >= 0 and < 1)
     private double noiseFraction;
@@ -38,8 +41,8 @@ public class Radar
         
         // randomly set the location of the monster (can be explicity set through the
         //  setMonsterLocation method
-        monsterLocationRow = (int)(Math.random() * rows);
-        monsterLocationCol = (int)(Math.random() * cols);
+        monsterLocationRow = rows-1;//(int)(Math.random() * rows);
+        monsterLocationCol = 0;//(int)(Math.random() * cols);
         
         noiseFraction = 0.05;
         numScans= 0;
@@ -51,6 +54,15 @@ public class Radar
      */
     public void scan()
     {
+        //save the current scan for comparison
+        boolean[][] prevScan = new boolean[currentScan.length][currentScan[0].length];
+         for(int row = 0; row < prevScan.length; row++)
+        {
+            for(int col = 0; col < prevScan[0].length; col++)
+            {
+                prevScan[row][col] = currentScan[row][col];
+            }
+        }
         // zero the current scan grid
         for(int row = 0; row < currentScan.length; row++)
         {
@@ -61,23 +73,64 @@ public class Radar
         }
         
         // detect the monster
-        currentScan[monsterLocationRow][monsterLocationCol] = true;
-        
+        monsterLocationRow += monsterDx;
+        monsterLocationCol += monsterDy;
+        if (monsterLocationRow < currentScan.length && monsterLocationCol < currentScan[0].length)
+        {
+            currentScan[monsterLocationRow][monsterLocationCol] = true;
+        }
         // inject noise into the grid
         injectNoise();
         
         // udpate the accumulator
-        for(int row = 0; row < currentScan.length; row++)
+        int[][] possibleDxDy = new int[11][11];
+        for(int prevRow = 0; prevRow < prevScan.length; prevRow++)
         {
-            for(int col = 0; col < currentScan[0].length; col++)
+            for(int prevCol = 0; prevCol < prevScan[0].length; prevCol++)
             {
-                if(currentScan[row][col] == true)
+                if(prevScan[prevRow][prevCol] == true)
                 {
-                   accumulator[row][col]++;
+                   for(int currentRow = 0; currentRow < currentScan.length; currentRow++)
+                    {
+                        for(int currentCol = 0; currentCol < currentScan[0].length; currentCol++)
+                        {
+                            if(currentScan[currentRow][currentCol] == true &&
+                                Math.abs(prevRow-currentRow) <= 5 &&
+                                Math.abs(prevCol-currentCol) <= 5)
+                            {
+                                int changeY = 0;
+                                int changeX = 0;
+                                if(currentRow < prevCol)
+                                {
+                                    changeY = -(prevCol-currentCol);
+                                }
+                                else
+                                {
+                                    changeY = currentCol-prevCol;
+                                }
+                                if(currentCol < prevRow)
+                                {
+                                    changeX = -(prevRow-currentRow);
+                                }
+                                else
+                                {
+                                    changeX = currentRow-prevRow;
+                                }
+                                possibleDxDy[changeY+5][changeX+5] += 1;
+                            }
+                        }
+                    }
                 }
             }
         }
-        
+        for (int i = 0; i < possibleDxDy.length; i++)
+        {
+            for (int j = 0; i < possibleDxDy.length; i++)
+            {
+                System.out.print(possibleDxDy[i][j] + " ");
+            }
+            System.out.println();
+        }
         // keep track of the total number of scans
         numScans++;
     }
@@ -98,6 +151,26 @@ public class Radar
         // update the radar grid to show that something was detected at the specified location
         currentScan[row][col] = true;
     }
+
+
+
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public void setMonsterVelocity(int dy, int dx)
+    {
+        monsterDx = dx;
+        monsterDy = dy;
+    }
+
     
      /**
      * Sets the probability that a given cell will generate a false detection
