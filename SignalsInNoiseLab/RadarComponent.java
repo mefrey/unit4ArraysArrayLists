@@ -8,8 +8,8 @@ import javax.swing.JComponent;
 /**
  * Class that is responsible for rendering the current radar scan image and the accumulated radar image.
  * 
- * @author @gcschmit
- * @version 19 July 2014
+ * @author @gcschmit @mefrey
+ * @version 12/18/14
  */
 public class RadarComponent extends JComponent
 {
@@ -20,10 +20,8 @@ public class RadarComponent extends JComponent
     
     /**
      * Constructor
-     *
      * @param    radar    the radar object containing the data from which to generate the images
      * @pre the specified radar object must be non-null
-     * 
      */
     public RadarComponent(Radar radar)
     {
@@ -33,9 +31,7 @@ public class RadarComponent extends JComponent
     /**
      * Overrides JComponent's getPreferredSize method to return a size large enough to encapsulate
      *  two radar grids side by side
-     *
-     * @returns the preferred size for the component
-     * 
+     * @returns the preferred size for the component 
      */
     public Dimension getPreferredSize()
     {
@@ -48,11 +44,8 @@ public class RadarComponent extends JComponent
     /**
      * This method is invoked by the Java Run-Time whenever the component needs to be redrawn.
      * It does not need to be invoked explicitly. It draws both the current radar scan and the
-     * accumulated radar image where the brightness of the cell is proportional to the number of
-     * times that it has been detected in a scan.
-     *
-     * @param    g    the graphics object to be used for all graphics operations
-     * 
+     * accumulated radar image in order to visiually see the monster.
+     * @param    g    the graphics object to be used for all graphics operations 
      */
     public void paintComponent(Graphics g)
     {
@@ -61,6 +54,9 @@ public class RadarComponent extends JComponent
         // cool radar-looking colors
         final Color DETECTED_COLOR = new Color(184, 254, 183);
         final Color UNDETECTED_COLOR = new Color(6, 63, 3);
+        //reversed colors for accumulator
+        final Color DETECTED_COLORA = new Color(6, 63, 3);
+        final Color UNDETECTED_COLORA = new Color(184, 254, 183);
         
         // draw the image for the current scan of the radar
         int rows = radar.getNumRows();
@@ -96,18 +92,20 @@ public class RadarComponent extends JComponent
         {
             for(int col = 0; col < cols; col++)
             {
-                int x = X_OFFSET + col * CELL_WIDTH ;
+                int x = X_OFFSET+col * CELL_WIDTH ;
                 int y = row * CELL_HEIGHT ;
                 
                 Rectangle2D.Double rect = new Rectangle2D.Double(x, y, CELL_WIDTH , CELL_HEIGHT );
                 
-                float pixelValue = (float)(radar.getAccumulatedDetection(row, col)) / radar.getNumScans();
-
-                // due to floating-point rounding issues, pixelValue can end up slightly greater than 1.0
-                //  we'll cap it since the Color constructor requires values <= 1.0
-                pixelValue = Math.min(pixelValue, 1.0f);
+                if(radar.getAccumulatedDetection(row, col))
+                {
+                    g2.setColor(DETECTED_COLORA);
+                }
+                else
+                {
+                    g2.setColor(UNDETECTED_COLORA);
+                }
                 
-                g2.setColor(new Color(pixelValue, pixelValue, pixelValue));
                 g2.fill(rect);
             }
         }
